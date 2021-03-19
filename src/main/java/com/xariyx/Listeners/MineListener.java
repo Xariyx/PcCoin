@@ -1,6 +1,8 @@
 package com.xariyx.Listeners;
 
 import com.xariyx.Main;
+import com.xariyx.Utils;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -31,20 +33,25 @@ public class MineListener implements Listener {
         if (cSection == null) {
             return;
         }
-
-        String blockType = event.getBlock().getType().name();
+        Block block = event.getBlock();
+        String blockType = block.getType().name();
 
         if (!cSection.contains(blockType)) {
             return;
         }
 
-        if (Math.random() <= cSection.getDouble(blockType)) {
+        if (Math.random() > cSection.getDouble(blockType)) {
             return;
         }
 
-        Player player = event.getPlayer();
-        player.getInventory().addItem(pcCoin);
-        player.sendMessage(translateColor(messages.getString("get")));
 
+        Player player = event.getPlayer();
+
+        //player.getInventory().addItem(pcCoin);
+
+        player.getWorld().dropItemNaturally(block.getLocation(), pcCoin);
+
+        player.sendMessage(translateColor(messages.getString("get")));
+        Utils.playPcCoin(player);
     }
 }

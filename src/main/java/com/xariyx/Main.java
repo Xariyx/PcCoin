@@ -30,14 +30,18 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.saveConfig();
+
     }
 
 
 
 
      private void loadPcCoin() {
-        this.pcCoin = this.getConfig().getItemStack("pcCoin");
+        ItemStack temp =  this.getConfig().getItemStack("pcCoin");
+        assert temp != null;
+        temp.setAmount(1);
+        this.pcCoin = temp;
+
      }
 
      public ItemStack getPcCoin() {

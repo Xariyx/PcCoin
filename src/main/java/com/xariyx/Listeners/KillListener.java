@@ -1,6 +1,7 @@
 package com.xariyx.Listeners;
 
 import com.xariyx.Main;
+import com.xariyx.Utils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -41,14 +42,18 @@ public class KillListener implements Listener {
             return;
         }
 
-        if(Math.random() <= cSection.getDouble(entityType)){
+        if(Math.random() > cSection.getDouble(entityType)){
             return;
         }
+
         Player player = event.getEntity().getKiller();
 
-        player.getInventory().addItem(pcCoin);
-        player.sendMessage(translateColor(messages.getString("get")));
+        //player.getInventory().addItem(pcCoin);
 
+        player.getWorld().dropItemNaturally(event.getEntity().getLocation(), pcCoin);
+
+        player.sendMessage(translateColor(messages.getString("get")));
+        Utils.playPcCoin(player);
 
 
     }

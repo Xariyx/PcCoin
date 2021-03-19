@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
 
 import static com.xariyx.Utils.translateColor;
 
@@ -48,6 +47,7 @@ public class Commands implements CommandExecutor {
         if (args[0].equalsIgnoreCase("buff")) {
 
             int amount = config.getInt("costs.buff");
+
             if (!Utils.removeItemStack(player, pcCoin, amount)) {
                 player.sendMessage(translateColor(messages
                         .getString("noCoin")
@@ -62,7 +62,7 @@ public class Commands implements CommandExecutor {
             PotionEffect regen = new PotionEffect(PotionEffectType.REGENERATION, duration / 10, 5);
             PotionEffect attack = new PotionEffect(PotionEffectType.INCREASE_DAMAGE, duration, 2);
             PotionEffect resist = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, duration, 2);
-
+            PotionEffect levitation = new PotionEffect(PotionEffectType.LEVITATION, 3, 2);
 
             player.addPotionEffect(speed);
             player.addPotionEffect(mining);
@@ -70,15 +70,17 @@ public class Commands implements CommandExecutor {
             player.addPotionEffect(regen);
             player.addPotionEffect(attack);
             player.addPotionEffect(resist);
+            player.addPotionEffect(levitation);
 
             player.sendMessage(translateColor(messages.getString("godMode")));
+            return true;
 
         }
 
 
         if (args[0].equalsIgnoreCase("message")) {
 
-            if(args.length < 2){
+            if (args.length < 2) {
 
                 player.sendMessage(translateColor((messages
                         .getString("shortMessage"))));
@@ -99,7 +101,6 @@ public class Commands implements CommandExecutor {
             System.arraycopy(args, 1, messageParts, 0, messageParts.length);
 
 
-
             Bukkit.getServer().broadcastMessage(
                     translateColor(messages
                             .getString("message")
@@ -111,7 +112,7 @@ public class Commands implements CommandExecutor {
         }
 
 
-        if (!player.hasPermission("admin")) {
+        if (!player.isOp()) {
             player.sendMessage(translateColor(messages.getString("noPermission")));
             return true;
         }
@@ -126,6 +127,7 @@ public class Commands implements CommandExecutor {
         if (args[0].equalsIgnoreCase("get")) {
             player.sendMessage(translateColor(messages.getString("get")));
             player.getInventory().addItem(pcCoin);
+            Utils.playPcCoin(player);
             return true;
         }
 

@@ -1,7 +1,7 @@
 
 costs:
-  message: '1'
-  buff: '3'
+  message: 1
+  buff: 3
 
 pcCoin:
 
