@@ -111,6 +111,42 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
+        if (args[0].equalsIgnoreCase("tp") || args[0].equalsIgnoreCase("teleport")) {
+
+            if (args.length < 2) {
+
+                player.sendMessage(translateColor(messages
+                        .getString("teleportNoName")));
+
+                return true;
+            }
+
+            int amount = config.getInt("costs.teleport");
+
+            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+
+                if (p.getName().equalsIgnoreCase(args[1])) {
+
+                    if (!Utils.removeItemStack(player, pcCoin, amount)) {
+                        player.sendMessage(translateColor(messages
+                                .getString("noCoin")
+                                .replace("%amount%", String.valueOf(amount))));
+                    } else {
+                        player.teleport(p.getLocation());
+                        player.sendMessage(translateColor(messages
+                                .getString("teleport")
+                                .replace("%player%", p.getName())));
+                    }
+                    return true;
+                }
+            }
+
+            player.sendMessage(translateColor(messages
+                    .getString("teleportFail")
+                    .replace("%player%", args[1] )));
+
+            return true;
+        }
 
         if (!player.isOp()) {
             player.sendMessage(translateColor(messages.getString("noPermission")));

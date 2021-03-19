@@ -2,6 +2,7 @@
 costs:
   message: 1
   buff: 3
+  teleport: 5
 
 pcCoin:
 

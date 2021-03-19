@@ -1,5 +1,5 @@
 name: PcCoin
-version: ${project.version}
+version: $1.0
 main: com.xariyx.Main
 api-version: 1.16
 authors: [ Xariyx ]
@@ -7,5 +7,5 @@ description: Currency plugin
 commands:
   pccoin:
     aliases: [pcc, pc, coin]
-    description: "PcCoin admin tools"
-    usage: /pccoin <set/get/addmob/addblock>
+    description: "PcCoin plugin commands"
+    usage: /pccoin <buff/message/teleport>
